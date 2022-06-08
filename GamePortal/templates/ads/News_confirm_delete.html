@@ -1,6 +1,5 @@
 {% extends 'news/Base.html' %}
 {% load static %}
-
 {% block title %}
 {{ post.header|truncatewords:2 }}
 {% endblock title %}
@@ -13,7 +12,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
                             <h1>{{ post.header }}</h1>
-                            <span class="subheading">Вы действительно хотите удалить эту новость?</span>
+                            <span class="subheading">Вы действительно хотите удалить этот пост?</span>
                             <span class="meta">
                                 <form method="POST">
                                     <div class="row gx-4 gx-lg-5 justify-content-center">

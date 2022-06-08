@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, UpdateView, CreateView, D
 from .models import News
 from django.contrib.auth.models import User
 from .forms import PostForm
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+# from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 import logging
 
 
@@ -33,18 +33,17 @@ class PostView(DetailView):
 
 class UserView(DetailView):
     model = User
-    template_name = 'News/User.html'
     context_object_name = 'User'
 
 
-class PostAdd(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class PostAdd(CreateView):
     permission_required = ('news.add_post',)
     model = News
     form_class = PostForm
-    template_name = 'News/Post_new.html'
+    template_name = 'ads/News_update.html'
 
 
-class PostEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class PostEdit(UpdateView):
     permission_required = ('news.change_post',)
     model = News
     form_class = PostForm
@@ -54,7 +53,7 @@ class PostEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return News.objects.get(pk=pk)
 
 
-class PostDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class PostDelete(DeleteView):
     permission_required = ('news.delete_post',)
     model = News
     queryset = News.objects.all()
