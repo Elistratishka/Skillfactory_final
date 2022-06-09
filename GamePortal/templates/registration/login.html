@@ -1,0 +1,27 @@
+{% extends 'ads/Base.html' %}
+{% load static %}
+{% block title %}
+{% endblock title %}
+{% block content %}
+    <h1>Login</h1>
+    <hr>
+    <div class="container px-4 px-lg-5">
+        {% if form.errors %}
+            <p>{{ form.errors.error }}</p>
+        {% endif %}
+        {% if form_a %}
+            <form action="{% url 'login' %}" method="post">
+        {{ form_a }}
+        {% csrf_token %}
+                <button type="submit" class="btn btn-success">submit</button>
+            </form>
+        {% else %}
+            <form action="{% url 'login_confirm' %}" method="post">
+        {{ form_c }}
+        {% csrf_token %}
+                <button type="submit" class="btn btn-success">submit</button>
+            </form>
+         {% endif %}
+            <a href="{% url 'password_reset' %}">Forgot password?</a>
+    </div>
+{% endblock content %}

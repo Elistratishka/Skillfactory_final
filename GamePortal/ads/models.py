@@ -15,7 +15,7 @@ class Characters(models.Model):
 
 
 class News(models.Model):
-    author = models.OneToOneField(User, verbose_name='Автор', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
     header = models.CharField('Заголовок', max_length=255)
     content = RichTextUploadingField('Текст')
     character = models.ForeignKey(Characters, verbose_name='Персонаж', on_delete=models.CASCADE)
