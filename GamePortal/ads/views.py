@@ -51,14 +51,12 @@ class UserView(DetailView, LoginRequiredMixin):
 
 
 class PostAdd(CreateView, LoginRequiredMixin):
-    permission_required = ('news.add_post',)
     model = News
     form_class = PostForm
     template_name = 'ads/News_update.html'
 
 
 class PostEdit(UpdateView, LoginRequiredMixin):
-    permission_required = ('news.change_post',)
     model = News
     form_class = PostForm
 
