@@ -20,31 +20,42 @@
             </div>
         </header>
         <!-- Main Content-->
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a>
-                            <h2 class="post-title">{{ user.username }}</h2>
-                            <h3 class="post-subtitle">{{ user.email }}</h3>
-                        </a>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                <!-- Pager-->
-                </div>
-            </div>
-        </div>
+
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
                     {% for post in user.news_set.all %}
                     <div class="post-preview">
-                        <a href="{% url 'detail' post.id %}">>
-                            <h2 class="post-title">{{ user.username }}</h2>
-                            <h3 class="post-subtitle">{{ post.content }}</h3>
+                        <a>
+                            <h2 class="post-title">{{ post.header}}</h2>
+                            {% for comment in post.comment_get.all %}
+                            <h3 class="post-subtitle"> {{ comment.commentator }} </h3>
+                            <h3 class="post-subtitle"> {{ comment.text }} </h3>
+                            <h3 class="post-subtitle"> {{ comment.time|date:'D d.m.y H:i' }} </h3>
+                            <div class="container px-4 px-lg-5">
+                                <div class="row gx-4 gx-lg-5 justify-content-center">
+                                    <div class="col-md-10 col-lg-8 col-xl-7">
+                                        <ul class="list-inline text-center">
+                                            <li class="list-inline-item">
+                                                <a href="{% url 'commit' comment.id %}">
+                                                    <span class="fa-stack fa-lg">
+                                                        <i class="post-subtitle">commit</i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="{% url 'delete' comment.id %}">
+                                                    <span class="fa-stack fa-lg">
+                                                        <i class="post-subtitle">delete</i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                             </div>
+                            {% endfor %}
                         </a>
                     </div>
                     <!-- Divider-->

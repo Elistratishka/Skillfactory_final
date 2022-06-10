@@ -33,7 +33,7 @@ class News(models.Model):
 
 
 class Comment(models.Model):
-    commentator = models.OneToOneField(User, verbose_name='Комментатор', on_delete=models.CASCADE)
+    commentator = models.ForeignKey(User, verbose_name='Комментатор', on_delete=models.CASCADE)
     news = models.ForeignKey(News, verbose_name='Объявление', on_delete=models.CASCADE)
     text = models.TextField('Текст комментария')
     time = models.DateTimeField('Дата комментирования', auto_now_add=True)

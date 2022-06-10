@@ -13,10 +13,8 @@
                         <div class="post-heading">
                             <h1>{{ post.header }}</h1>
                             <span class="meta">
-                                <h5>Тэг: {% for cat in post.category.all %} {{ cat.name }} {% endfor %}</h5>
                                 <h5>Дата публикации {{ post.time|date:'D d.m.y H:i'}}</h5>
-                                <h5>Рейтинг: {{ post.rating }}</h5>
-                                <h5>Автор: {{ post.author.name.username }} (рейтинг автора: {{ post.author.rating }})</h5>
+                                <h5>Автор: {{ post.author.username }}</h5>
                             </span>
                         </div>
                     </div>
@@ -28,31 +26,21 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        {{ post.text }}
+                        {{ post.content|safe }}
                     </div>
                 </div>
             </div>
         </article>
+
         <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="{% url 'edit' post.id %}">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="post-subtitle">edit</i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="{% url 'delete' post.id %}">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="post-subtitle">delete</i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <form action="{% url 'add_comment' post.id %}" method="post">
+                        {{form}}
+                        {% csrf_token %}
+                        <input type="submit" value="подтвердить"/>
+                    </form>
                 </div>
             </div>
+        </div>
 {% endblock content %}

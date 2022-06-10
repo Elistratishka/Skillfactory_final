@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from .models import News
 from django.contrib.auth.models import User
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 # from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 import logging
 
@@ -29,6 +29,18 @@ class PostList(ListView):
 class PostView(DetailView):
     model = News
     context_object_name = 'post'
+    form_class = CommentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+        return super().get(request, *args, **kwargs)
 
 
 class UserView(DetailView):
@@ -58,3 +70,7 @@ class PostDelete(DeleteView):
     model = News
     queryset = News.objects.all()
     success_url = '/news/'
+
+
+def comment_add(request):
+    pass
