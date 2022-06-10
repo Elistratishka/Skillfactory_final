@@ -1,8 +1,10 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from .models import News
+from .models import News, Comment
 from django.contrib.auth.models import User
 from .forms import PostForm, CommentForm
-# from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 import logging
 
 
@@ -43,19 +45,19 @@ class PostView(DetailView):
         return super().get(request, *args, **kwargs)
 
 
-class UserView(DetailView):
+class UserView(DetailView, LoginRequiredMixin):
     model = User
     context_object_name = 'User'
 
 
-class PostAdd(CreateView):
+class PostAdd(CreateView, LoginRequiredMixin):
     permission_required = ('news.add_post',)
     model = News
     form_class = PostForm
     template_name = 'ads/News_update.html'
 
 
-class PostEdit(UpdateView):
+class PostEdit(UpdateView, LoginRequiredMixin):
     permission_required = ('news.change_post',)
     model = News
     form_class = PostForm
@@ -65,12 +67,32 @@ class PostEdit(UpdateView):
         return News.objects.get(pk=pk)
 
 
-class PostDelete(DeleteView):
+class PostDelete(DeleteView, LoginRequiredMixin):
     permission_required = ('news.delete_post',)
     model = News
     queryset = News.objects.all()
     success_url = '/news/'
 
 
-def comment_add(request):
-    pass
+@login_required()
+def comment_add(request, pk):
+    user = request.user
+    post = News.objects.get(pk=pk)
+    text = request.POST['text']
+    Comment.objects.create(commentator=user, news=post, text=text)
+    return redirect('detail', pk)
+
+
+def comment_commit(request, pk):
+    user = request.user
+    comment = Comment.objects.get(pk=pk)
+    comment.commit = True
+    comment.save()
+    return redirect('user', user.id)
+
+
+def comment_delete(request, pk):
+    user = request.user
+    comment = Comment.objects.get(pk=pk)
+    comment.delete()
+    return redirect('user', user.id)

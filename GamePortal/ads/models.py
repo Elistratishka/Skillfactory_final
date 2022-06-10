@@ -37,6 +37,7 @@ class Comment(models.Model):
     news = models.ForeignKey(News, verbose_name='Объявление', on_delete=models.CASCADE)
     text = models.TextField('Текст комментария')
     time = models.DateTimeField('Дата комментирования', auto_now_add=True)
+    commit = models.BooleanField('Подтверждение', default=False)
 
     def __str__(self):
         return self.text
