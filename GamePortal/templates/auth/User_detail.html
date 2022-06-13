@@ -30,14 +30,14 @@
                         <a>
                             <h3 class="post-subtitle"> <a href="{% url 'detail' post.id %}">
                             {{ post.header}}
-                            </a>
+                                </a>
+                                <a href="{% url 'edit' post.id %}">
+                                    <i title="edit" class="fas fa-circle fa-stack-3x"></i>
+                                </a>
+                                <a href="{% url 'delete' post.id %}">
+                                    <i title="delete" class="fas fa-circle fa-stack-3x"></i>
+                                </a>
                             </h3>
-                            <a href="{% url 'edit' post.id %}">
-                                <i title="edit" class="fas fa-circle fa-stack-3x"></i>
-                            </a>
-                            <a href="{% url 'delete' post.id %}">
-                                <i title="delete" class="fas fa-circle fa-stack-3x"></i>
-                            </a>
                             {% for comment in post.comment_set.all %}
                             <h4 class="post-subtitle"> {{ comment.commentator }} </h4>
                             <h4 class="post-subtitle"> {{ comment.text }} </h4>
