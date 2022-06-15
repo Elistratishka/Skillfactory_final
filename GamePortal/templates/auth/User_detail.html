@@ -39,6 +39,7 @@
                                 </a>
                             </h3>
                             {% for comment in post.comment_set.all %}
+                            {% if not comment.commit %}
                             <h4 class="post-subtitle"> {{ comment.commentator }} </h4>
                             <h4 class="post-subtitle"> {{ comment.text }} </h4>
                             <h4 class="post-subtitle"> {{ comment.time|date:'D d.m.y H:i' }} </h4>
@@ -64,6 +65,12 @@
                                     </div>
                                 </div>
                              </div>
+                            {% else %}
+                            <h4 class="post-subtitle"> {{ comment.commentator }} </h4>
+                            <h4 class="post-subtitle"> {{ comment.text }} </h4>
+                            <h4 class="post-subtitle"> {{ comment.time|date:'D d.m.y H:i' }} </h4>
+                            <h4 class="post-subtitle"> отклик принят </h4>
+                            {% endif %}
                             {% endfor %}
                         </a>
                     </div>

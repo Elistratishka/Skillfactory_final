@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
-    'ads',
+    'ads.apps.AdsConfig',
     'accounting',
 ]
 
